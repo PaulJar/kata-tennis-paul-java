@@ -21,17 +21,40 @@ public class TennisTest {
     }
 
     @Test
-    void testScore() {
+    void testScorePlusOne() {
 
         // ARRANGE
-        int a = 1;
-        int b = 3;
         TennisGame tennisGame = new TennisGame();
+        int player1ScoreInit = tennisGame.getPlayer1().getScore();
+        int player2ScoreInit = tennisGame.getPlayer2().getScore();
 
         // ACT
-        int somme = tennisGame.getScore(a, b);
+        tennisGame.updateScore();
+        int player1ScoreEnd = tennisGame.getPlayer1().getScore();
+        int player2ScoreEnd = tennisGame.getPlayer2().getScore();
 
         // ASSERT
-        Assertions.assertEquals(4, somme);
+        // check if at least one player won a point
+        Assertions.assertTrue((player1ScoreEnd==player1ScoreInit+1) ||
+                (player2ScoreEnd==player2ScoreInit+1));
+    }
+
+    @Test
+    void testGameHasWinner() {
+
+        // ARRANGE
+        TennisGame tennisGame = new TennisGame();
+        int player1ScoreInit = tennisGame.getPlayer1().getScore();
+        int player2ScoreInit = tennisGame.getPlayer2().getScore();
+
+        // ACT
+        while(!tennisGame.hasWinner()) {
+            tennisGame.updateScore();
+        }
+
+        // ASSERT
+        // check if at least one player won the match
+        Assertions.assertTrue((tennisGame.getPlayer1().isWinner(tennisGame.getPlayer2().getScore())) ||
+                (tennisGame.getPlayer2().isWinner(tennisGame.getPlayer1().getScore())));
     }
 }
