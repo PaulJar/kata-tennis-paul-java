@@ -36,9 +36,17 @@ public class TennisGame {
      * @return the status of the game
      */
     public String getStatus() {
-        String status = tennisPlayer1.getName() + "\t" + tennisPlayer1.getScoreFormatted()
-                + "\t-\t"
-                + tennisPlayer2.getScoreFormatted() + "\t" + tennisPlayer2.getName() + "\n" ;
+        String status;
+
+        // specific case : DEUCE
+        if(tennisPlayer1.getScore() == 3 &&
+                tennisPlayer2.getScore() == 3) {
+            status = "DEUCE\n" ;
+        } else {
+            status = tennisPlayer1.getName() + "\t" + tennisPlayer1.getScoreFormatted()
+                    + "\t-\t"
+                    + tennisPlayer2.getScoreFormatted() + "\t" + tennisPlayer2.getName() + "\n" ;
+        }
         return status;
     }
 
