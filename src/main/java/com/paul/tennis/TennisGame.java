@@ -7,14 +7,6 @@ public class TennisGame {
 
     /**
      * Create a new tennis game
-     */
-    public TennisGame() {
-        this.tennisPlayer1 = new TennisPlayer("Paul généré");
-        this.tennisPlayer2 = new TennisPlayer("Hervé généré");
-    }
-
-    /**
-     * Create a new tennis game
      * @param tennisPlayer1 - 1st player
      * @param tennisPlayer2 - 2nd player
      */
@@ -59,10 +51,11 @@ public class TennisGame {
         int min = 1;
         int max = 2;
         int winner = (int)(Math.random() * ((max - min) + 1)) + min;
+
         int player1Score = this.tennisPlayer1.getScore();
         int player2Score = this.tennisPlayer2.getScore();
 
-        // update the score of the winner
+        // update the score of the winner and of the loser (in case of ADV. lost)
         switch (winner) {
             case 1:
                 calculateScore(tennisPlayer1, tennisPlayer2);
@@ -79,13 +72,17 @@ public class TennisGame {
     public void calculateScore(TennisPlayer winner, TennisPlayer loser) {
         System.out.println(winner.getName() + " wins the ball.");
 
+        // +1 on the winner's score
         winner.setScore(winner.getScore() + 1);
 
+        // specific case : winner just got ADV.
         if(winner.getScore() == 4 &&
                 loser.getScore() == 3) {
             winner.setAdvantage(true);
             System.out.println(winner.getName() + " has ADVANTAGE.");
         }
+        // specific case : loser had ADV. He lost it.
+        // but winner's score did not change (still 40)
         if(winner.getScore() == 4 &&
                 loser.getScore() == 4) {
             winner.setScore(loser.getScore() - 1);
